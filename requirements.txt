@@ -1,0 +1,16 @@
+# Versions below are the ones the test suite was actually run with (Python 3.12).
+fastapi==0.141.1
+uvicorn[standard]==0.53.0
+pydantic[email]==2.13.5
+pydantic-settings==2.15.0
+SQLAlchemy==2.0.54
+alembic==1.20.0
+psycopg[binary]==3.3.6
+python-jose[cryptography]==3.5.0
+passlib==1.7.4
+bcrypt==4.0.1        # passlib 1.7.4 breaks with bcrypt >= 4.1
+httpx==0.28.1
+pandas==3.0.6
+python-multipart==0.0.32
+python-dotenv==1.2.3
+pytest==9.1.1

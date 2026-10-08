@@ -1,0 +1,28 @@
+# Render Blueprint (New > Blueprint > pick this repo). Or create the web service by hand with the same values.
+services:
+  - type: web
+    name: bonayon-api
+    runtime: python
+    plan: free
+    region: singapore            # closest Render region to Bangladesh; create the Neon project in AWS Singapore too
+    buildCommand: bash build.sh  # pip install, alembic upgrade head, seed districts/crops, optional first admin
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT --proxy-headers --forwarded-allow-ips='*'
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3
+      - key: DATABASE_URL        # paste the Neon connection string
+        sync: false
+      - key: JWT_SECRET          # generated once by Render, never in git
+        generateValue: true
+      - key: CORS_ORIGINS        # your Netlify URL, e.g. https://bonayon.netlify.app
+        sync: false
+      - key: CLIMATE_PROVIDER
+        value: mock              # "mock" = SYNTHETIC data; switch to "nasa" for real data (see README)
+      - key: ADMIN_EMAIL         # optional first admin, created during build. Delete these 3 after the first deploy.
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ADMIN_NAME
+        sync: false
